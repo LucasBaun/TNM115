@@ -1,0 +1,91 @@
+html{
+    scroll-behavior: smooth;
+}
+
+body{
+    /* background-color: red; */
+    background-image: url(bg.jpg);
+    background-size: 100%;
+    background-repeat: no-repeat;
+    margin: 0px;
+    
+}
+
+.container{
+    background-color: rgba(0, 0, 0, 0.5);
+    /* background-color: red; */
+    height: 100dvh;
+    margin: 0px;
+    color: antiquewhite;
+    display: flex;
+    text-align: center;
+    /* align-content: center; */
+    /* justify-content: center; */
+    align-items: stretch;
+    flex-direction: column;
+}
+
+.title{
+    display: flex;
+    align-items: end;
+    justify-content: center;
+    padding-top: 20vh;
+    height: 45vh;
+    margin: 0px;
+    font-family: 'Libre Barcode 128 Text', system-ui;
+    font-size: 400%;
+    /* background-color: red; */
+}
+
+.title h1{
+    margin-bottom: 0px;
+}
+
+.scroll{
+    height: 45vh;
+    /* background-color: green; */
+}
+
+.container h2{
+    margin-top: 20vh;
+    font-size: 300%;
+    display: flex;
+    align-items: end;
+    justify-content: center;
+    transition: 0.3s;
+
+    /* margin-bottom: 0px; */
+}
+
+a {
+    text-decoration: none;
+    color: antiquewhite;
+    margin-bottom: 0px;
+}
+
+h2:hover{
+    /* margin-top: -4vh; */
+    font-size: 450%;
+    transition: 0.3s;
+}
+
+.info{
+    height: 100vh;
+    background-color: rgb(59, 57, 55);
+    display: flex;
+    flex-direction: row;
+}
+
+.left{
+    background-color: orange;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    align-items: baseline;
+    width: 35vw;
+}
+
+.right{
+    background-color: green;
+}
