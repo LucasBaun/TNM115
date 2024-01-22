@@ -71,21 +71,58 @@ h2:hover{
 
 .info{
     height: 100vh;
-    background-color: rgb(59, 57, 55);
+    background-color: rgb(24, 23, 23);
     display: flex;
+    color: antiquewhite;
     flex-direction: row;
 }
 
 .left{
-    background-color: orange;
+    /* background-color: orange; */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-content: center;
     align-items: baseline;
-    width: 35vw;
+    width: 30vw;
+    padding-left: 50px;
+    text-align: center;
+    /* align-self: center; */
+}
+
+.left img{
+
+    width: 350px;
+    /* position: relative; */
+}
+
+.left ul{
+    padding-left: 6vw;
+    font-weight: 600;
+    font-size: 150%;
+    font-family: 'Oswald', sans-serif;
+}
+
+li{
+    padding-top: 5px;
 }
 
 .right{
-    background-color: green;
+    /* background-color: green; */
+    display: flex;
+    padding: 40px;
+    flex-direction: column;
+    font-family: 'Oswald', sans-serif;
+    align-items: center;
+}
+
+.right article{
+    padding-left: 10%;
+    padding-right: 10%;
+    font-size: 130%;
+}
+
+
+span{
+    color: rgb(255, 88, 88);
 }
