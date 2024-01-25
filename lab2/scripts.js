@@ -132,8 +132,219 @@ const solarSystemData = {
 document.addEventListener("DOMContentLoaded", function(){
    console.log("HTML DOM tree loaded, and ready for manipulation.");
    // === YOUR FUNCTION CALL TO INITIATE THE GENERATION OF YOUR WEB PAGE SHOULD GO HERE ===
-
+    action();
 });
+
+function action(){
+    //Divs for all images
+    const htmlbody = document.body;
+
+    const r1 = document.createElement("div");
+    const r2 = document.createElement("div");
+    const r3 = document.createElement("div");
+
+    const r11 = document.createElement("div");
+    const r12 = document.createElement("div");
+    const r13 = document.createElement("div");
+
+    const r21 = document.createElement("div");
+    const r22 = document.createElement("div");
+    const r23 = document.createElement("div");
+
+    const r31 = document.createElement("div");
+    const r32 = document.createElement("div");
+    const r33 = document.createElement("div");
+
+    const block1 = document.createElement("div");
+
+
+    //styles
+
+    const style = document.createElement('style');
+    style.innerHTML = `
+    body {
+        display: flex;
+        flex-direction: column;
+        margin: 0px;
+        text-align: center;
+        background-color: black;
+    }
+    #r1, #r2, #r3{
+        display: flex;
+        flex-direction: row;
+        align-content: stretch;
+        height: 50vh;
+        width: 100%;
+    }
+    #r11, #r12, #r13, #r21, #r22, #r23, #r31, #r32, #r33 {
+        display: flex;
+        flex-direction: column;
+        width: 33%;
+        height: 100%;
+        align-items: center;
+    }
+
+    img{
+        width: 55%;
+        transition: 0.3s;
+    }
+    
+    h1{
+        color: white;
+        margin-bottom: 0px;
+    }
+
+    h2{
+        color: white;
+        font-size: 300%;
+        padding-top: 25px;
+        padding-bottom: 40px;
+    }
+
+    img:hover{
+        rotate: 359deg;
+        width: 70%;
+        transition: 1s;
+        cursor: pointer;
+    }
+
+    `;
+    document.head.appendChild(style);
+
+    const info = document.createElement("h2");
+    info.innerText = "Solar System"
+    document.body.append(info);
+
+    document.body.append(r1);
+    r1.id = "r1";
+    document.body.append(r2);
+    r2.id = "r2";
+    document.body.append(r3);
+    r3.id = "r3";
+
+    r1.appendChild(r11);
+    r11.id = "r11";
+    r1.appendChild(r12);
+    r12.id = "r12";
+    r1.appendChild(r13);
+    r13.id = "r13";
+
+    r2.appendChild(r21);
+    r21.id = "r21";
+    r2.appendChild(r22);
+    r22.id = "r22";
+    r2.appendChild(r23);
+    r23.id = "r23";
+
+    r3.appendChild(r31);
+    r31.id = "r31";
+    r3.appendChild(r32);
+    r32.id = "r32";
+    r3.appendChild(r33);
+    r33.id = "r33";
+
+
+  
+
+    //images
+    // solarSystemData.planets.id
+    const img_ear = document.createElement("img");
+    const eart = document.createElement("h1");
+    img_ear.src = solarSystemData.planets[2].image_src;
+    eart.innerText = solarSystemData.planets[2].name;
+
+    const img_jup = document.createElement("img");
+    const jupt = document.createElement("h1");
+    img_jup.src = solarSystemData.planets[4].image_src;
+    jupt.innerText = solarSystemData.planets[4].name;
+
+    const img_mar = document.createElement("img");
+    const mart = document.createElement("h1");
+    img_mar.src = solarSystemData.planets[3].image_src;
+    mart.innerText = solarSystemData.planets[3].name;
+
+    const img_mer = document.createElement("img");
+    const mert = document.createElement("h1");
+    img_mer.src = solarSystemData.planets[0].image_src;
+    mert.innerText = solarSystemData.planets[0].name;
+
+    const img_nep = document.createElement("img");
+    const nept = document.createElement("h1");
+    img_nep.src = solarSystemData.planets[7].image_src;
+    nept.innerText = solarSystemData.planets[7].name;
+
+    const img_sat = document.createElement("img");
+    const satt = document.createElement("h1");
+    img_sat.src = solarSystemData.planets[5].image_src;
+    satt.innerText = solarSystemData.planets[5].name;
+
+    const img_sun = document.createElement("img");
+    const sunt = document.createElement("h1");
+    img_sun.src = solarSystemData.star.image_src;
+    sunt.innerText = solarSystemData.star.name;
+    img_sun.addEventListener('click', clicked);
+
+    const img_ura = document.createElement("img");
+    const urat = document.createElement("h1");
+    img_ura.src = solarSystemData.planets[6].image_src;
+    urat.innerText = solarSystemData.planets[6].name;
+    img_ura.addEventListener('click', clicked2);
+
+    const img_ven = document.createElement("img");
+    const vent = document.createElement("h1");
+    img_ven.src = solarSystemData.planets[1].image_src;
+    vent.innerText = solarSystemData.planets[1].name;
+
+
+    
+
+
+    // const img_eart = document.createElement("img");
+    // img_eart.src = solarSystemData.star.image_src;
+
+
+    r11.appendChild(eart);
+    r11.appendChild(img_ear);
+
+    r12.appendChild(jupt);
+    r12.appendChild(img_jup);
+
+    r13.appendChild(mart);
+    r13.appendChild(img_mar);
+
+    r21.appendChild(mert);
+    r21.appendChild(img_mer);
+
+    r22.appendChild(nept);
+    r22.appendChild(img_nep);
+    
+    r23.appendChild(satt);
+    r23.appendChild(img_sat);
+
+    r31.appendChild(sunt);
+    r31.appendChild(img_sun);
+
+    r32.appendChild(urat);
+    r32.appendChild(img_ura);
+
+    r33.appendChild(vent);
+    r33.appendChild(img_ven);
+    
+
+
+}
+
+function clicked(){
+    r1.style.display = "none";
+    r2.style.display = "none";
+}
+
+function clicked2(){
+    r1.style.display = "flex";
+    r2.style.display = "flex";
+}
+
+
 
 // ===== PROVIDED JS SOURCE CODE    -- ABOVE   =====
 // ===== JS LAB 2 IMPLEMENTATION -- BENEATH =====
