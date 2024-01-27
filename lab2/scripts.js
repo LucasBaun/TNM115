@@ -256,7 +256,7 @@ function action(){
     }
 
     a:hover {
-        color: grey;
+        color: purple;
         cursor: pointer;
     }
 
@@ -455,10 +455,11 @@ function clickedear(){
     const image = document.createElement("img");
     const text = document.createElement("p");
     const moon = document.createElement("h2");
-    title.id = "tit"
+    link.id = "tit"
     image.id = "img";
     text.id = "txt";
     moon.id = "mon";
+    link.target = "_blank";
     image.src = solarSystemData.planets[2].image_src;
     link.href = solarSystemData.planets[2].online_ref;
     title.innerText = solarSystemData.planets[2].name;
@@ -479,19 +480,23 @@ function clickedear(){
 function clickedjup(){
     window.location.hash = 'jup';
     const title = document.createElement("h1");
+    const link = document.createElement("a");
     const image = document.createElement("img");
     const text = document.createElement("p");
     const moon = document.createElement("h2");
-    title.id = "tit"
+    link.id = "tit"
     image.id = "img";
     text.id = "txt";
     moon.id = "mon";
+    link.target = "_blank";
     image.src = solarSystemData.planets[4].image_src;
     title.innerText = solarSystemData.planets[4].name;
     text.innerText = solarSystemData.planets[4].description;
+    link.href = solarSystemData.planets[4].online_ref;
     moon.innerText = "Moons: " + solarSystemData.planets[4].moons;
+    link.appendChild(title);
     img_div.appendChild(image);
-    inf.appendChild(title);
+    inf.appendChild(link);
     inf.appendChild(text);
     inf.appendChild(moon);
     r1.style.display = "none";
@@ -503,19 +508,23 @@ function clickedjup(){
 function clickedmar(){
     window.location.hash = 'mar';
     const title = document.createElement("h1");
+    const link = document.createElement("a");
     const image = document.createElement("img");
     const text = document.createElement("p");
     const moon = document.createElement("h2");
-    title.id = "tit"
+    link.id = "tit"
     image.id = "img";
     text.id = "txt";
     moon.id = "mon";
+    link.target = "_blank";
     image.src = solarSystemData.planets[3].image_src;
     title.innerText = solarSystemData.planets[3].name;
     text.innerText = solarSystemData.planets[3].description;
+    link.href = solarSystemData.planets[3].online_ref;
     moon.innerText = "Moons: " + solarSystemData.planets[3].moons;
+    link.appendChild(title);
     img_div.appendChild(image);
-    inf.appendChild(title);
+    inf.appendChild(link);
     inf.appendChild(text);
     inf.appendChild(moon);
     r1.style.display = "none";
@@ -528,19 +537,23 @@ function clickedmer(){
     window.location.hash = 'mer';
 
     const title = document.createElement("h1");
+    const link = document.createElement("a");
     const image = document.createElement("img");
     const text = document.createElement("p");
     const moon = document.createElement("h2");
-    title.id = "tit"
+    link.id = "tit"
     image.id = "img";
     text.id = "txt";
     moon.id = "mon";
+    link.target = "_blank";
     image.src = solarSystemData.planets[0].image_src;
     title.innerText = solarSystemData.planets[0].name;
     text.innerText = solarSystemData.planets[0].description;
+    link.href = solarSystemData.planets[0].online_ref;
     moon.innerText = "Moons: " + solarSystemData.planets[0].moons;
+    link.appendChild(title);
     img_div.appendChild(image);
-    inf.appendChild(title);
+    inf.appendChild(link);
     inf.appendChild(text);
     inf.appendChild(moon);
     r1.style.display = "none";
@@ -553,19 +566,23 @@ function clickednep(){
     window.location.hash = 'nep';
 
     const title = document.createElement("h1");
+    const link = document.createElement("a");
     const image = document.createElement("img");
     const text = document.createElement("p");
     const moon = document.createElement("h2");
-    title.id = "tit"
+    link.id = "tit"
     image.id = "img";
     text.id = "txt";
     moon.id = "mon";
+    link.target = "_blank";
     image.src = solarSystemData.planets[7].image_src;
     title.innerText = solarSystemData.planets[7].name;
     text.innerText = solarSystemData.planets[7].description;
+    link.href = solarSystemData.planets[7].online_ref;
     moon.innerText = "Moons: " + solarSystemData.planets[7].moons;
+    link.appendChild(title);
     img_div.appendChild(image);
-    inf.appendChild(title);
+    inf.appendChild(link);
     inf.appendChild(text);
     inf.appendChild(moon);
     r1.style.display = "none";
@@ -578,19 +595,23 @@ function clickedsat(){
     window.location.hash = 'sat';
 
     const title = document.createElement("h1");
+    const link = document.createElement("a");
     const image = document.createElement("img");
     const text = document.createElement("p");
     const moon = document.createElement("h2");
-    title.id = "tit"
+    link.id = "tit"
     image.id = "img";
     text.id = "txt";
     moon.id = "mon";
+    link.target = "_blank";
     image.src = solarSystemData.planets[5].image_src;
     title.innerText = solarSystemData.planets[5].name;
     text.innerText = solarSystemData.planets[5].description;
+    link.href = solarSystemData.planets[5].online_ref;
     moon.innerText = "Moons: " + solarSystemData.planets[5].moons;
+    link.appendChild(title);
     img_div.appendChild(image);
-    inf.appendChild(title);
+    inf.appendChild(link);
     inf.appendChild(text);
     inf.appendChild(moon);
     r1.style.display = "none";
@@ -602,19 +623,23 @@ function clickedsat(){
 function clickedsun(){
     window.location.hash = 'sun';
     const title = document.createElement("h1");
+    const link = document.createElement("a");
     const image = document.createElement("img");
     const text = document.createElement("p");
     const moon = document.createElement("h2");
-    title.id = "tit"
+    link.id = "tit"
     image.id = "img";
     text.id = "txt";
     moon.id = "mon";
+    link.target = "_blank";
     image.src = solarSystemData.star.image_src;
     title.innerText = solarSystemData.star.name;
+    link.href = solarSystemData.star.online_ref;
     text.innerText = solarSystemData.star.description;
     moon.innerText = "";
+    link.appendChild(title);
     img_div.appendChild(image);
-    inf.appendChild(title);
+    inf.appendChild(link);
     inf.appendChild(text);
     inf.appendChild(moon);
     r1.style.display = "none";
@@ -626,19 +651,23 @@ function clickedsun(){
 function clickedura(){
     window.location.hash = 'ura';
     const title = document.createElement("h1");
+    const link = document.createElement("a");
     const image = document.createElement("img");
     const text = document.createElement("p");
     const moon = document.createElement("h2");
-    title.id = "tit"
+    link.id = "tit"
     image.id = "img";
     text.id = "txt";
     moon.id = "mon";
+    link.target = "_blank";
     image.src = solarSystemData.planets[6].image_src;
     title.innerText = solarSystemData.planets[6].name;
     text.innerText = solarSystemData.planets[6].description;
+    link.href = solarSystemData.planets[6].online_ref;
     moon.innerText = "Moons: " + solarSystemData.planets[6].moons;
+    link.appendChild(title);
     img_div.appendChild(image);
-    inf.appendChild(title);
+    inf.appendChild(link);
     inf.appendChild(text);
     inf.appendChild(moon);
     r1.style.display = "none";
@@ -650,19 +679,23 @@ function clickedura(){
 function clickedven(){
     window.location.hash = 'ven';
     const title = document.createElement("h1");
+    const link = document.createElement("a");
     const image = document.createElement("img");
     const text = document.createElement("p");
     const moon = document.createElement("h2");
-    title.id = "tit"
+    link.id = "tit"
     image.id = "img";
     text.id = "txt";
     moon.id = "mon";
+    link.target = "_blank";
     image.src = solarSystemData.planets[1].image_src;
     title.innerText = solarSystemData.planets[1].name;
+    link.href = solarSystemData.planets[1].online_ref;
     text.innerText = solarSystemData.planets[1].description;
     moon.innerText = "Moons: " + solarSystemData.planets[1].moons;
+    link.appendChild(title);
     img_div.appendChild(image);
-    inf.appendChild(title);
+    inf.appendChild(link);
     inf.appendChild(text);
     inf.appendChild(moon);
     r1.style.display = "none";
