@@ -155,7 +155,8 @@ function action(){
     const r32 = document.createElement("div");
     const r33 = document.createElement("div");
 
-    const block1 = document.createElement("div");
+    const prev = document.createElement("div");
+    const inf = document.createElement("div");
 
 
     //styles
@@ -208,12 +209,80 @@ function action(){
         cursor: pointer;
     }
 
+    #prev{
+        display: none;
+        flex-direction: row;
+        //justify-content: center;
+    }
+
+    #inf{
+        display: flex;
+        flex-direction: column;
+        align-content: flex-start;
+        justify-content: flex-start;
+        text-align: start;
+        width: 45%;
+    }
+
+    #prev img {
+        width: 55%;
+    }
+
+    #prev img:hover {
+        rotate: 0deg;
+        width: 55%;
+        cursor: default;
+    }
+
+    #prev p{
+        color: white;
+    }
+
+    #backbtn{
+        padding-left: 35px;
+    }
+
+    #backbtn:hover {
+        color: grey;
+        cursor: pointer;
+    }
+
+    #inf h2{
+        font-size: 150%;
+    }
+
+    a{
+        text-decoration: none;
+    }
+
+    a:hover {
+        color: grey;
+        cursor: pointer;
+    }
+
     `;
+
+    const temp = window.location.hash;
+
+
+    const backtext = document.createElement("h1");
+    backtext.innerText = "<< Back";
+    backtext.id = "backbtn";
+    prev.appendChild(backtext);
+    backtext.addEventListener('click', back);
     document.head.appendChild(style);
+    const img_div = document.createElement("div");
+    img_div.id = "img_div";
+    prev.appendChild(img_div);
+    inf.id = "inf";
+    prev.appendChild(inf)
 
     const info = document.createElement("h2");
-    info.innerText = "Solar System"
+    info.innerText = "Solar System";
     document.body.append(info);
+
+    document.body.append(prev);
+    prev.id = "prev";
 
     document.body.append(r1);
     r1.id = "r1";
@@ -252,50 +321,55 @@ function action(){
     const eart = document.createElement("h1");
     img_ear.src = solarSystemData.planets[2].image_src;
     eart.innerText = solarSystemData.planets[2].name;
+    img_ear.addEventListener('click', clickedear);
 
     const img_jup = document.createElement("img");
     const jupt = document.createElement("h1");
     img_jup.src = solarSystemData.planets[4].image_src;
     jupt.innerText = solarSystemData.planets[4].name;
+    img_jup.addEventListener('click', clickedjup);
 
     const img_mar = document.createElement("img");
     const mart = document.createElement("h1");
     img_mar.src = solarSystemData.planets[3].image_src;
     mart.innerText = solarSystemData.planets[3].name;
+    img_mar.addEventListener('click', clickedmar);
 
     const img_mer = document.createElement("img");
     const mert = document.createElement("h1");
     img_mer.src = solarSystemData.planets[0].image_src;
     mert.innerText = solarSystemData.planets[0].name;
+    img_mer.addEventListener('click', clickedmer);
 
     const img_nep = document.createElement("img");
     const nept = document.createElement("h1");
     img_nep.src = solarSystemData.planets[7].image_src;
     nept.innerText = solarSystemData.planets[7].name;
+    img_nep.addEventListener('click', clickednep);
 
     const img_sat = document.createElement("img");
     const satt = document.createElement("h1");
     img_sat.src = solarSystemData.planets[5].image_src;
     satt.innerText = solarSystemData.planets[5].name;
+    img_sat.addEventListener('click', clickedsat);
 
     const img_sun = document.createElement("img");
     const sunt = document.createElement("h1");
     img_sun.src = solarSystemData.star.image_src;
     sunt.innerText = solarSystemData.star.name;
-    img_sun.addEventListener('click', clicked);
+    img_sun.addEventListener('click', clickedsun);
 
     const img_ura = document.createElement("img");
     const urat = document.createElement("h1");
     img_ura.src = solarSystemData.planets[6].image_src;
     urat.innerText = solarSystemData.planets[6].name;
-    img_ura.addEventListener('click', clicked2);
+    img_ura.addEventListener('click', clickedura);
 
     const img_ven = document.createElement("img");
     const vent = document.createElement("h1");
     img_ven.src = solarSystemData.planets[1].image_src;
     vent.innerText = solarSystemData.planets[1].name;
-
-
+    img_ven.addEventListener('click', clickedven);
     
 
 
@@ -332,16 +406,269 @@ function action(){
     
 
 
-}
+    
+    if(temp == "#earth"){
+        clickedear();
+    } else if (temp == "#jup"){
+        clickedjup();
+    } else if (temp == "#mar"){
+        clickedmar();
+    } else if (temp == "#mer"){
+        clickedmer();
+    } else if (temp == "#nep"){
+        clickednep();
+    } else if (temp == "#sat"){
+        clickedsat();
+    } else if (temp == "#sun"){
+        clickedsun();
+    } else if (temp == "#ura"){
+        clickedura();
+    } else if (temp == "#ven"){
+        clickedven();
+    } else {
+    }
 
-function clicked(){
-    r1.style.display = "none";
-    r2.style.display = "none";
-}
 
-function clicked2(){
+
+
+function back(){
+    window.location.hash = '';
+    const image = document.getElementById("img");
+    const text = document.getElementById("txt");
+    const title = document.getElementById("tit");
+    const moon = document.getElementById("mon");
     r1.style.display = "flex";
     r2.style.display = "flex";
+    r3.style.display = "flex";
+    prev.style.display = "none";
+    img_div.removeChild(image);
+    inf.removeChild(text);
+    inf.removeChild(title);
+    inf.removeChild(moon);
+}
+
+function clickedear(){
+    window.location.hash = 'earth';
+    //skapar img, text, titel, moons osv
+    const title = document.createElement("h1");
+    const link = document.createElement("a");
+    const image = document.createElement("img");
+    const text = document.createElement("p");
+    const moon = document.createElement("h2");
+    title.id = "tit"
+    image.id = "img";
+    text.id = "txt";
+    moon.id = "mon";
+    image.src = solarSystemData.planets[2].image_src;
+    link.href = solarSystemData.planets[2].online_ref;
+    title.innerText = solarSystemData.planets[2].name;
+    text.innerText = solarSystemData.planets[2].description;
+    moon.innerText = "Moons: " + solarSystemData.planets[2].moons;
+    link.appendChild(title);
+    img_div.appendChild(image);
+    inf.appendChild(link);
+    inf.appendChild(text);
+    inf.appendChild(moon);
+    r1.style.display = "none";
+    r2.style.display = "none";
+    r3.style.display = "none";
+    prev.style.display = "flex";
+
+}
+
+function clickedjup(){
+    window.location.hash = 'jup';
+    const title = document.createElement("h1");
+    const image = document.createElement("img");
+    const text = document.createElement("p");
+    const moon = document.createElement("h2");
+    title.id = "tit"
+    image.id = "img";
+    text.id = "txt";
+    moon.id = "mon";
+    image.src = solarSystemData.planets[4].image_src;
+    title.innerText = solarSystemData.planets[4].name;
+    text.innerText = solarSystemData.planets[4].description;
+    moon.innerText = "Moons: " + solarSystemData.planets[4].moons;
+    img_div.appendChild(image);
+    inf.appendChild(title);
+    inf.appendChild(text);
+    inf.appendChild(moon);
+    r1.style.display = "none";
+    r2.style.display = "none";
+    r3.style.display = "none";
+    prev.style.display = "flex";
+}
+
+function clickedmar(){
+    window.location.hash = 'mar';
+    const title = document.createElement("h1");
+    const image = document.createElement("img");
+    const text = document.createElement("p");
+    const moon = document.createElement("h2");
+    title.id = "tit"
+    image.id = "img";
+    text.id = "txt";
+    moon.id = "mon";
+    image.src = solarSystemData.planets[3].image_src;
+    title.innerText = solarSystemData.planets[3].name;
+    text.innerText = solarSystemData.planets[3].description;
+    moon.innerText = "Moons: " + solarSystemData.planets[3].moons;
+    img_div.appendChild(image);
+    inf.appendChild(title);
+    inf.appendChild(text);
+    inf.appendChild(moon);
+    r1.style.display = "none";
+    r2.style.display = "none";
+    r3.style.display = "none";
+    prev.style.display = "flex";
+}
+
+function clickedmer(){
+    window.location.hash = 'mer';
+
+    const title = document.createElement("h1");
+    const image = document.createElement("img");
+    const text = document.createElement("p");
+    const moon = document.createElement("h2");
+    title.id = "tit"
+    image.id = "img";
+    text.id = "txt";
+    moon.id = "mon";
+    image.src = solarSystemData.planets[0].image_src;
+    title.innerText = solarSystemData.planets[0].name;
+    text.innerText = solarSystemData.planets[0].description;
+    moon.innerText = "Moons: " + solarSystemData.planets[0].moons;
+    img_div.appendChild(image);
+    inf.appendChild(title);
+    inf.appendChild(text);
+    inf.appendChild(moon);
+    r1.style.display = "none";
+    r2.style.display = "none";
+    r3.style.display = "none";
+    prev.style.display = "flex";
+}
+
+function clickednep(){
+    window.location.hash = 'nep';
+
+    const title = document.createElement("h1");
+    const image = document.createElement("img");
+    const text = document.createElement("p");
+    const moon = document.createElement("h2");
+    title.id = "tit"
+    image.id = "img";
+    text.id = "txt";
+    moon.id = "mon";
+    image.src = solarSystemData.planets[7].image_src;
+    title.innerText = solarSystemData.planets[7].name;
+    text.innerText = solarSystemData.planets[7].description;
+    moon.innerText = "Moons: " + solarSystemData.planets[7].moons;
+    img_div.appendChild(image);
+    inf.appendChild(title);
+    inf.appendChild(text);
+    inf.appendChild(moon);
+    r1.style.display = "none";
+    r2.style.display = "none";
+    r3.style.display = "none";
+    prev.style.display = "flex";
+}
+
+function clickedsat(){
+    window.location.hash = 'sat';
+
+    const title = document.createElement("h1");
+    const image = document.createElement("img");
+    const text = document.createElement("p");
+    const moon = document.createElement("h2");
+    title.id = "tit"
+    image.id = "img";
+    text.id = "txt";
+    moon.id = "mon";
+    image.src = solarSystemData.planets[5].image_src;
+    title.innerText = solarSystemData.planets[5].name;
+    text.innerText = solarSystemData.planets[5].description;
+    moon.innerText = "Moons: " + solarSystemData.planets[5].moons;
+    img_div.appendChild(image);
+    inf.appendChild(title);
+    inf.appendChild(text);
+    inf.appendChild(moon);
+    r1.style.display = "none";
+    r2.style.display = "none";
+    r3.style.display = "none";
+    prev.style.display = "flex";
+}
+
+function clickedsun(){
+    window.location.hash = 'sun';
+    const title = document.createElement("h1");
+    const image = document.createElement("img");
+    const text = document.createElement("p");
+    const moon = document.createElement("h2");
+    title.id = "tit"
+    image.id = "img";
+    text.id = "txt";
+    moon.id = "mon";
+    image.src = solarSystemData.star.image_src;
+    title.innerText = solarSystemData.star.name;
+    text.innerText = solarSystemData.star.description;
+    moon.innerText = "";
+    img_div.appendChild(image);
+    inf.appendChild(title);
+    inf.appendChild(text);
+    inf.appendChild(moon);
+    r1.style.display = "none";
+    r2.style.display = "none";
+    r3.style.display = "none";
+    prev.style.display = "flex";
+}
+
+function clickedura(){
+    window.location.hash = 'ura';
+    const title = document.createElement("h1");
+    const image = document.createElement("img");
+    const text = document.createElement("p");
+    const moon = document.createElement("h2");
+    title.id = "tit"
+    image.id = "img";
+    text.id = "txt";
+    moon.id = "mon";
+    image.src = solarSystemData.planets[6].image_src;
+    title.innerText = solarSystemData.planets[6].name;
+    text.innerText = solarSystemData.planets[6].description;
+    moon.innerText = "Moons: " + solarSystemData.planets[6].moons;
+    img_div.appendChild(image);
+    inf.appendChild(title);
+    inf.appendChild(text);
+    inf.appendChild(moon);
+    r1.style.display = "none";
+    r2.style.display = "none";
+    r3.style.display = "none";
+    prev.style.display = "flex";
+}
+
+function clickedven(){
+    window.location.hash = 'ven';
+    const title = document.createElement("h1");
+    const image = document.createElement("img");
+    const text = document.createElement("p");
+    const moon = document.createElement("h2");
+    title.id = "tit"
+    image.id = "img";
+    text.id = "txt";
+    moon.id = "mon";
+    image.src = solarSystemData.planets[1].image_src;
+    title.innerText = solarSystemData.planets[1].name;
+    text.innerText = solarSystemData.planets[1].description;
+    moon.innerText = "Moons: " + solarSystemData.planets[1].moons;
+    img_div.appendChild(image);
+    inf.appendChild(title);
+    inf.appendChild(text);
+    inf.appendChild(moon);
+    r1.style.display = "none";
+    r2.style.display = "none";
+    r3.style.display = "none";
+    prev.style.display = "flex";
 }
 
 
@@ -349,3 +676,4 @@ function clicked2(){
 // ===== PROVIDED JS SOURCE CODE    -- ABOVE   =====
 // ===== JS LAB 2 IMPLEMENTATION -- BENEATH =====
 
+}
