@@ -40,7 +40,7 @@ const solarSystemData = {
             name: "Mercury",
             description: "Mercury is the smallest planet in our solar system. It's just a little bigger than Earth's Moon. Mercury itself, though, doesn't have any moons. It is the closest planet to the Sun, but it's actually not the hottest. Venus is hotter.",
             time_day: 59,
-            time_year: 88,
+            time_year: 0.24,
             moons: null,
             neighbors: [ "s1", "p2" ],
             image_src: "media/mercury.png",
@@ -51,7 +51,7 @@ const solarSystemData = {
             name: "Venus",
             description: "Venus looks like a very active planet. It has mountains and volcanoes. Venus is similar in size to Earth. Earth is just a little bit bigger.",
             time_day: 243,
-            time_year: 225,
+            time_year: 0.62,
             moons: null,
             neighbors: [ "p1", "p3" ],
             image_src: "media/venus.png",
@@ -73,7 +73,7 @@ const solarSystemData = {
             name: "Mars",
             description: "Mars is a cold desert world. The average temperature on Mars is minus 85 degrees Fahrenheit - way below freezing. It is half the size of Earth. Mars is sometimes called the Red Planet. It's red because of rusty iron in the ground.",
             time_day: 1.025,
-            time_year: 687,
+            time_year: 1.88,
             moons: [ "Phobos", "Deimos" ],
             neighbors: [ "p3", "p5" ],
             image_src: "media/mars.png",
@@ -250,6 +250,8 @@ function action(){
 
     #inf h2{
         font-size: 150%;
+        padding-bottom: 0px;
+        margin-bottom: 0px;
     }
 
     a{
@@ -268,10 +270,19 @@ function action(){
         transition: 0.3s;
     }
 
+    #time, #time2{
+        color: white;
+        margin: 2px;
+    }
+
+    #time {
+        margin-top: 15px;
+    }
+
     `;
 
     const temp = window.location.hash;
-
+    console.log("Window hash = " + temp.replace('#', ''));
 
     const backtext = document.createElement("h1");
     backtext.innerText = "<< Back";
@@ -284,12 +295,14 @@ function action(){
     prev.appendChild(img_div);
     inf.id = "inf";
     prev.appendChild(inf)
+    
 
     const info = document.createElement("h2");
     info.innerText = "Solar System";
     info.id = "info";
     info.addEventListener('click', allPlanets)
     document.body.append(info);
+
 
     document.body.append(prev);
     prev.id = "prev";
@@ -438,9 +451,6 @@ function action(){
     } else {
     }
 
-
-
-
 function back(){
     window.location.hash = '';
     const image = document.getElementById("img");
@@ -455,6 +465,8 @@ function back(){
     inf.removeChild(text);
     inf.removeChild(title);
     inf.removeChild(moon);
+    inf.removeChild(time);
+    inf.removeChild(time2);
 }
 
 function allPlanets(){
@@ -470,21 +482,43 @@ function clickedear(){
     const image = document.createElement("img");
     const text = document.createElement("p");
     const moon = document.createElement("h2");
-    link.id = "tit"
+    link.id = "tit";
     image.id = "img";
     text.id = "txt";
     moon.id = "mon";
     link.target = "_blank";
+
+
+
     image.src = solarSystemData.planets[2].image_src;
     link.href = solarSystemData.planets[2].online_ref;
     title.innerText = solarSystemData.planets[2].name;
     text.innerText = solarSystemData.planets[2].description;
     moon.innerText = "Moons: " + solarSystemData.planets[2].moons;
+
     link.appendChild(title);
     img_div.appendChild(image);
     inf.appendChild(link);
     inf.appendChild(text);
     inf.appendChild(moon);
+    const time = document.createElement("h3");
+    time.id = "time";
+    var timeInDays = solarSystemData.planets[2].time_day;
+    console.log(timeInDays);
+    if(timeInDays < 1) {
+        var timeInHours = timeInDays * 24;
+        time.innerText = "It revolves around itself in " + timeInHours + " earth-hours";
+    } else {
+        time.innerText = "It revolves around itself in " + timeInDays + " earth-days";
+    }
+    inf.appendChild(time);
+
+    const time2 = document.createElement("h3");
+    time2.id = "time2";
+    time2.innerText = "It revolves around the sun in " + solarSystemData.planets[2].time_year + " earth-years";
+
+    inf.appendChild(time2);
+
     r1.style.display = "none";
     r2.style.display = "none";
     r3.style.display = "none";
@@ -514,6 +548,24 @@ function clickedjup(){
     inf.appendChild(link);
     inf.appendChild(text);
     inf.appendChild(moon);
+    const time = document.createElement("h3");
+    time.id = "time";
+    const time2 = document.createElement("h3");
+    time2.id = "time2";
+    time2.innerText = "It revolves around the sun in " + solarSystemData.planets[4].time_year + " earth-years";
+
+    var timeInDays = solarSystemData.planets[4].time_day;
+    console.log(timeInDays);
+    if(timeInDays < 1) {
+        var timeInHours = timeInDays * 24;
+        time.innerText = "It revolves around itself in " + timeInHours + " earth-hours";
+    } else {
+        time.innerText = "It revolves around itself in " + timeInDays + " earth-days";
+    }
+    inf.appendChild(time);
+    inf.appendChild(time2);
+
+
     r1.style.display = "none";
     r2.style.display = "none";
     r3.style.display = "none";
@@ -542,6 +594,25 @@ function clickedmar(){
     inf.appendChild(link);
     inf.appendChild(text);
     inf.appendChild(moon);
+    const time = document.createElement("h3");
+    time.id = "time";
+
+    var timeInDays = solarSystemData.planets[3].time_day;
+    console.log(timeInDays);
+    if(timeInDays < 1) {
+        var timeInHours = timeInDays * 24;
+        time.innerText = "It revolves around itself in " + timeInHours + " earth-hours";
+    } else {
+        time.innerText = "It revolves around itself in " + timeInDays + " earth-days";
+    }
+    inf.appendChild(time);
+    const time2 = document.createElement("h3");
+    time2.id = "time2";
+    time2.innerText = "It revolves around the sun in " + solarSystemData.planets[3].time_year + " earth-years";
+
+    inf.appendChild(time2);
+
+
     r1.style.display = "none";
     r2.style.display = "none";
     r3.style.display = "none";
@@ -571,6 +642,24 @@ function clickedmer(){
     inf.appendChild(link);
     inf.appendChild(text);
     inf.appendChild(moon);
+    const time = document.createElement("h3");
+    time.id = "time";
+    var timeInDays = solarSystemData.planets[0].time_day;
+    console.log(timeInDays);
+    if(timeInDays < 1) {
+        var timeInHours = timeInDays * 24;
+        time.innerText = "It revolves around itself in " + timeInHours + " earth-hours";
+    } else {
+        time.innerText = "It revolves around itself in " + timeInDays + " earth-days";
+    }
+    inf.appendChild(time);
+    const time2 = document.createElement("h3");
+    time2.id = "time2";
+    time2.innerText = "It revolves around the sun in " + solarSystemData.planets[0].time_year + " earth-years";
+
+    inf.appendChild(time2);
+
+
     r1.style.display = "none";
     r2.style.display = "none";
     r3.style.display = "none";
@@ -600,6 +689,24 @@ function clickednep(){
     inf.appendChild(link);
     inf.appendChild(text);
     inf.appendChild(moon);
+    const time = document.createElement("h3");
+    time.id = "time";
+    var timeInDays = solarSystemData.planets[7].time_day;
+    console.log(timeInDays);
+    if(timeInDays < 1) {
+        var timeInHours = timeInDays * 24;
+        time.innerText = "It revolves around itself in " + timeInHours + " earth-hours";
+    } else {
+        time.innerText = "It revolves around itself in " + timeInDays + " earth-days";
+    }
+    inf.appendChild(time);
+    const time2 = document.createElement("h3");
+    time2.id = "time2";
+    time2.innerText = "It revolves around the sun in " + solarSystemData.planets[7].time_year + " earth-years";
+
+    inf.appendChild(time2);
+
+
     r1.style.display = "none";
     r2.style.display = "none";
     r3.style.display = "none";
@@ -629,6 +736,23 @@ function clickedsat(){
     inf.appendChild(link);
     inf.appendChild(text);
     inf.appendChild(moon);
+    const time = document.createElement("h3");
+    time.id = "time";
+    var timeInDays = solarSystemData.planets[5].time_day;
+    console.log(timeInDays);
+    if(timeInDays < 1) {
+        var timeInHours = timeInDays * 24;
+        time.innerText = "It revolves around itself in " + timeInHours + " earth-hours";
+    } else {
+        time.innerText = "It revolves around itself in " + timeInDays + " earth-days";
+    }
+    inf.appendChild(time);
+    const time2 = document.createElement("h3");
+    time2.id = "time2";
+    time2.innerText = "It revolves around the sun in " + solarSystemData.planets[5].time_year + " earth-years";
+
+    inf.appendChild(time2);
+
     r1.style.display = "none";
     r2.style.display = "none";
     r3.style.display = "none";
@@ -685,6 +809,23 @@ function clickedura(){
     inf.appendChild(link);
     inf.appendChild(text);
     inf.appendChild(moon);
+    const time = document.createElement("h3");
+    time.id = "time";
+    var timeInDays = solarSystemData.planets[6].time_day;
+    console.log(timeInDays);
+    if(timeInDays < 1) {
+        var timeInHours = timeInDays * 24;
+        time.innerText = "It revolves around itself in " + timeInHours + " earth-hours";
+    } else {
+        time.innerText = "It revolves around itself in " + timeInDays + " earth-days";
+    }
+    inf.appendChild(time);
+    const time2 = document.createElement("h3");
+    time2.id = "time2";
+    time2.innerText = "It revolves around the sun in " + solarSystemData.planets[6].time_year + " earth-years";
+
+    inf.appendChild(time2);
+
     r1.style.display = "none";
     r2.style.display = "none";
     r3.style.display = "none";
@@ -713,6 +854,23 @@ function clickedven(){
     inf.appendChild(link);
     inf.appendChild(text);
     inf.appendChild(moon);
+    const time = document.createElement("h3");
+    time.id = "time";
+    var timeInDays = solarSystemData.planets[1].time_day;
+    console.log(timeInDays);
+    if(timeInDays < 1) {
+        var timeInHours = timeInDays * 24;
+        time.innerText = "It revolves around itself in " + timeInHours + " earth-hours";
+    } else {
+        time.innerText = "It revolves around itself in " + timeInDays + " earth-days";
+    }
+    inf.appendChild(time);
+    const time2 = document.createElement("h3");
+    time2.id = "time2";
+    time2.innerText = "It revolves around the sun in " + solarSystemData.planets[1].time_year + " earth-years";
+
+    inf.appendChild(time2);
+
     r1.style.display = "none";
     r2.style.display = "none";
     r3.style.display = "none";
