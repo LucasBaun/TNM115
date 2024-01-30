@@ -245,6 +245,7 @@ function action(){
     #backbtn:hover {
         color: grey;
         cursor: pointer;
+        transition: 0.3s;
     }
 
     #inf h2{
@@ -258,6 +259,13 @@ function action(){
     a:hover {
         color: purple;
         cursor: pointer;
+        transition: 0.3s;
+    }
+
+    #info:hover {
+        cursor: pointer;
+        color: grey;
+        transition: 0.3s;
     }
 
     `;
@@ -279,6 +287,8 @@ function action(){
 
     const info = document.createElement("h2");
     info.innerText = "Solar System";
+    info.id = "info";
+    info.addEventListener('click', allPlanets)
     document.body.append(info);
 
     document.body.append(prev);
@@ -445,6 +455,11 @@ function back(){
     inf.removeChild(text);
     inf.removeChild(title);
     inf.removeChild(moon);
+}
+
+function allPlanets(){
+    window.open(solarSystemData.data_source, '_blank');
+
 }
 
 function clickedear(){
