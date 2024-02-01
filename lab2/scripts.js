@@ -875,8 +875,7 @@ function clickedven(){
     r2.style.display = "none";
     r3.style.display = "none";
     prev.style.display = "flex";
-}
-
+}   
 
 
 // ===== PROVIDED JS SOURCE CODE    -- ABOVE   =====
