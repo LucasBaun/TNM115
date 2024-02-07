@@ -1,0 +1,36 @@
+body{
+    background: linear-gradient(141deg, rgba(0,0,0,1) 0%, rgba(68,68,68,1) 100%);
+    margin: 0;
+    padding: 0;
+    max-width: 100dvw;
+}
+
+#container {
+    width: 100%;
+    margin: 0 auto;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    max-width: 90dvw;
+
+    
+    
+}
+
+h2 {
+    text-align: left;
+    color: #333;
+    margin: 0;
+    padding: 20px 0;
+    font-size: 120%;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 400;
+    color: #b8b8b8;
+}
+
+h1{
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    margin-bottom: 0px;
+    color: #b8b8b8;
+}

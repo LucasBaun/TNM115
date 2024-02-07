@@ -34,39 +34,64 @@ const server = http.createServer((req, res) => {
 
         //Here we extract URL path components for so called API endpoint routing, pretty much away to read the status from clients url
         const requestUrl = new URL(serverUrl + req.url);
-        const pathComponents = requestUrl.pathname.split("/");
+        const pathComponents = requestUrl.pathname.split("/");        
         console.log(pathComponents); // will be a vector with ["", "the status"], so we want pathcomponent[1] cause 0 is irrelevent
 
         //Here we handle the HTTP GET methods, so if the status from pathcomponents[1] is "test" it will maybe respond with something..
         if (req.method == "GET") { 
             switch(pathComponents[1])
             {
-                case "test":
-                    //do something                    
-                    console.log("Successfull reading status : test");
-                    res.statusCode = 200;
-                    
-                    res.end("test successfull!");
-                    break;
                 case "planets":
-                    //maybe send all planets info
-                    console.log("Successfull reading status : planets");
-                    res.statusCode = 200;
                     
-                    res.end("planets successfull");
+                    
+                    if (pathComponents[2] == "Sun") {
+                        sendResponse(res, 200, "text/plain", Jdata.star.description);
+                    } else {
+                        for (pass = 0; pass < Jdata.planets.length; pass++) {
+                            if (pathComponents[2] == Jdata.planets[pass].name) {
+                                sendResponse(res, 200, "text/plain", Jdata.planets[pass].description);
+                            }
+                        }                       
+                    }
                     break;
+                // case "image":
+                //     if (pathComponents[2] == "Sun") {
+                //         sendResponse(res, 200, "image/png", Jdata.star.image_src);
+                //     } else {
+                //         for (pass = 0; pass < Jdata.planets.length; pass++) {
+                //             if (pathComponents[2] == Jdata.planets[pass].name) {
+                //                 sendResponse(res, 200, "image/png", Jdata.planets[pass].image_src);
+                //             }
+                //         }                       
+
+                //     }
+
+                //     break;  
                 default:
                     //do something
                     console.log("Couldnt find any status with : " + pathComponents[1]);
-                    res.statusCode = 400;
-                    
-                    res.end("idiot");
+                    sendResponse(res, 400, "text/plain", "No specific API Endpoint");
                     break;
             }
         }
 
     });
 });
+
+function sendResponse(res, statusCode, contentType, data) {
+    res.statusCode = statusCode;
+    if (contentType != null) {
+        res.setHeader("Content-Type", contentType);
+    }
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Header", "*");
+    
+    if (data != null) {
+        res.end(data);
+    } else {
+        res.end();
+    }
+}
 
     
 server.listen(port, hostname, () => {
