@@ -11,10 +11,7 @@ body{
     padding: 30px;
     display: flex;
     flex-direction: column;
-    max-width: 90dvw;
-
-    
-    
+    max-width: 90dvw; 
 }
 
 h2 {
