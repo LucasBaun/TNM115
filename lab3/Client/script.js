@@ -17,8 +17,8 @@ const allPlanetsName =
         "Uranus",
         "Neptune",
         //Test error
-        // "lucas",
-        // "linus"
+        "lucas",
+        "linus"
         
     ]
 ;
@@ -44,10 +44,16 @@ planet så kallar vi på funktionen request_arg med planetens namn som argument.
     
 }
 function getIm() {
-    request_image(allPlanetsName[1], "/image/", "image/png");
+    for(pass = 0; pass < allPlanetsName.length; ++pass) {
+        let searchImage = "/image/";
+        let con = "image/png";
+        request_image(allPlanetsName[pass], searchImage, con);        
+    }    
 }
-getInfo();
-getIm();
+
+
+    getInfo();
+    getIm();
 /*
 -----------------Comment-----------------
 asynchronus function, the function that request information to the server
@@ -91,21 +97,7 @@ async function request_arg(planetTempName, search, content) {
 
         });        
     }
-    // } else if (response.ok && search === "/image/") {
-    //     response.blob().then((blobBody) => {
-    //       console.log(blobBody);
-    //       const imageTag = document.createElement("img");
-    //       const filepath = URL.createObjectURL(blobBody);
-    //       imageTag.src = filepath;
-    //       const planet = document.getElementById(planetTempName);
-    //       planet.appendChild(imageTag);
-    //     });
-    
-    /*
-    -----------------Comment-----------------
-    Om response.ok är false så kallar vi på response.text() och skickar med textbody som argument.
-    textbody innehåller informationen som vi får från servern.
-    */
+
   
 
 }
@@ -125,14 +117,12 @@ async function request_image(planetTempN, se, con) {
     if (responseImage.ok) {        
         responseImage.blob().then((blobBody) => {
             console.log(blobBody);
-            let imageTag = document.createElement("img");
+            let imageTag = document.createElement("img"); //Create img element
             const filepath = URL.createObjectURL(blobBody);
-            imageTag.src = filepath;
-            // imageTag.src = jsonBody;
+            imageTag.src = filepath;            
             let planet = document.getElementById(planetTempN);
             planet.appendChild(imageTag);
-
-            // container.appendChild(imageTag);
+           
         });
      } else {
         console.log("Something wnt wrong");

@@ -1,5 +1,5 @@
 body{
-    background: linear-gradient(141deg, rgba(0,0,0,1) 0%, rgba(68,68,68,1) 100%);
+    background: linear-gradient(142deg, rgb(0, 0, 0) 0%, rgba(68,68,68,1) 100%);
     margin: 0;
     padding: 0;
     max-width: 100dvw;
@@ -30,4 +30,14 @@ h1{
     font-weight: 700;
     margin-bottom: 0px;
     color: #b8b8b8;
+}
+
+img {
+    width: 250px; 
+    transition: 1s;
+}
+
+img:hover{
+    rotate: 359deg;
+    transition: 1s;
 }

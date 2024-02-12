@@ -44,7 +44,7 @@ const server = http.createServer((req, res) => {
         const pathComponents = requestUrl.pathname.split("/"); 
         console.log(pathComponents);
         console.log(req.method);
-
+        
 
         //Here we handle the HTTP GET methods, so if the status from pathcomponents[1] is "test" it will maybe respond with something..
         if (req.method == "GET") { 
@@ -70,29 +70,7 @@ const server = http.createServer((req, res) => {
                     break;                    
                 case "image":                    
                     console.log("Image switch");
-                    // if (pathComponents[2] == "Sun") {
-                    //     sendResponse(res, 200, "application/json", JSON.stringify(Jdata.star.image_src));
-                    // } else {
-                    //     console.log(pathComponents[2]);
-                    //     for (varv = 0; varv < Jdata.planets.length; pass++) {
-                    //         if(pathComponents[2] == (Jdata.planets[pass].name))
-                    //         sendResponse(res, 200, "application/json", JSON.stringify(Jdata.planets[pass].image_src));
-                    //     }
-                    // }
-                    // var imageFilePath;
-                    // if (pathComponents[2] === "Sun") {
-                    //     imageFilePath = Jdata.star.image_src;
-                    // }
-                    // else {
-                    //     for (pass = 0; pass < Jdata.planets.length; ++pass) {
-                    //         if (Jdata.planets[pass].name == pathComponents[2]) {
-                    //             console.log("Found planet: " + pathComponents[2]);
-                    //             imageFilePath = Jdata.planets[pass].image_src;
-                    //             // imageFilePath = Jdata.planets.find(p => p.name === pathComponents[2]).image_src;
-                    //         }
-                    //     }                
-                        
-                    // }
+          
                     console.log(pathComponents[2].toLowerCase());               
                    
                     const imageFilePath = "./lab3/Server/media/" + pathComponents[2].toLowerCase() + ".png";
