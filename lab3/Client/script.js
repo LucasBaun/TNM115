@@ -44,7 +44,7 @@ planet så kallar vi på funktionen request_arg med planetens namn som argument.
     
 }
 function getIm() {
-    request_image(allPlanetsName[0], "/image/", "application/json");
+    request_image(allPlanetsName[1], "/image/", "image/png");
 }
 getInfo();
 getIm();
@@ -123,15 +123,16 @@ async function request_image(planetTempN, se, con) {
     });
 
     if (responseImage.ok) {        
-        responseImage.json().then((jsonBody) => {
-            console.log(jsonBody);
+        responseImage.blob().then((blobBody) => {
+            console.log(blobBody);
             let imageTag = document.createElement("img");
-            // let filepath = URL.createObjectURL(jsonBody);
-            // imageTag.src = filepath;
-            imageTag.src = jsonBody;
-            // let planet = document.getElementById(planetTempName);
-            // planet.appendChild(imageTag);
-            container.appendChild(imageTag);
+            const filepath = URL.createObjectURL(blobBody);
+            imageTag.src = filepath;
+            // imageTag.src = jsonBody;
+            let planet = document.getElementById(planetTempN);
+            planet.appendChild(imageTag);
+
+            // container.appendChild(imageTag);
         });
      } else {
         console.log("Something wnt wrong");

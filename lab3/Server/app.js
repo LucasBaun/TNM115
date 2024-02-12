@@ -70,15 +70,15 @@ const server = http.createServer((req, res) => {
                     break;                    
                 case "image":                    
                     console.log("Image switch");
-                    if (pathComponents[2] == "Sun") {
-                        sendResponse(res, 200, "application/json", JSON.stringify(Jdata.star.image_src));
-                    } else {
-                        console.log(pathComponents[2]);
-                        for (varv = 0; varv < Jdata.planets.length; pass++) {
-                            if(pathComponents[2] == (Jdata.planets[pass].name))
-                            sendResponse(res, 200, "application/json", JSON.stringify(Jdata.planets[pass].image_src));
-                        }
-                    }
+                    // if (pathComponents[2] == "Sun") {
+                    //     sendResponse(res, 200, "application/json", JSON.stringify(Jdata.star.image_src));
+                    // } else {
+                    //     console.log(pathComponents[2]);
+                    //     for (varv = 0; varv < Jdata.planets.length; pass++) {
+                    //         if(pathComponents[2] == (Jdata.planets[pass].name))
+                    //         sendResponse(res, 200, "application/json", JSON.stringify(Jdata.planets[pass].image_src));
+                    //     }
+                    // }
                     // var imageFilePath;
                     // if (pathComponents[2] === "Sun") {
                     //     imageFilePath = Jdata.star.image_src;
@@ -93,19 +93,21 @@ const server = http.createServer((req, res) => {
                     //     }                
                         
                     // }
-                    // console.log(imageFilePath);
-                    // //const imageFilePath = "./media/" + pathComponents[2] + ".png";
-                    // fs.readFile(imageFilePath, (err, data2) => {
-                    //     console.log("Reading image successfull!")
-                    //     if (err) {                              
-                    //         console.log("error in image")  
-                    //         sendResponse(res, 404, "text/plain", null);
-                    //     }
-                    //     else {                                
-                    //         console.log("image send success") 
-                    //         sendResponse(res, 200, "image/png", data2);
-                    //     }
-                    // });
+                    console.log(pathComponents[2].toLowerCase());               
+                   
+                    const imageFilePath = "./lab3/Server/media/" + pathComponents[2].toLowerCase() + ".png";
+                    console.log(imageFilePath);
+                    fs.readFile(imageFilePath, (err, data2) => {
+                        console.log("Reading image successfull!")
+                        if (err) {                              
+                            console.error("error in image" + err.message)  
+                            sendResponse(res, 404, "text/plain", null);
+                        }
+                        else {                                
+                            console.log("image send success") 
+                            sendResponse(res, 200, "image/png", data2);
+                        }
+                    });
                     break;
                 
                 default:
