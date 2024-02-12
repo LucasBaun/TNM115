@@ -7,23 +7,19 @@ const hostname = "127.0.0.1";
 const port = 3000;
 const serverUrl = "http://" + hostname + ":" + port + "";
 const fs = require('node:fs');
-
-
-// const ft = require('node:fs');  //inbuilt filereading method in node.js
-// const fk = require('node:fs');  //inbuilt filereading method in node.js
+const path = require("node:path");
 
 /*
 -----------------Comment-----------------
 server är en instans av http.Server som skapar en server som lyssnar på port 3000.
 */
 const server = http.createServer((req, res) => {
-    /*
-    -----------------Comment-----------------
+    
+    /* -----------------Comment-----------------
     res.setHeader("Content-Type", "text/plain") sätter headern för response till text/plain.
     fs.readFile(...) => { ... }) läser in json-filen solar-system-data.json 
-    och skickar tillbaka den till klienten. Parameter err(Exception) and data(String)
-    */
-    res.setHeader("Content-Type", "text/plain");
+    och skickar tillbaka den till klienten. Parameter err(Exception) and data(String) */
+    
     fs.readFile('./lab3/solar-system-data.json', 'utf8', (err, data) => { 
         
         if (err) { //if expection loading file
@@ -32,122 +28,132 @@ const server = http.createServer((req, res) => {
             res.end("Server error");
         } else { //if reading success
             
-            console.log("Successfull reading file");  
+            console.log("Successfull reading text/plain file from solar-system-data.json");  
                      
         }
         
         //makes the string solar-system-data to JSON object, therefor can access elements     
-        const Jdata = JSON.parse(data);   
-
-        //Here we extract URL path components for so called API endpoint routing, pretty much away to read the status from clients url
+        const Jdata = JSON.parse(data);  
+        
+        /* -----------------Comment-----------------
+        requestUrl är en instans av URL som skapar en URL av serverUrl + req.url.
+        console.log(requestUrl.pathname) skriver ut pathnamnet av requestUrl.
+        pathComponents är en vektor som innehåller alla delar av pathnamnet som är separerade av /.
+        */
         const requestUrl = new URL(serverUrl + req.url);
-        console.log(requestUrl.pathname);
-        const pathComponents = requestUrl.pathname.split("/");        
-        console.log(pathComponents); // will be a vector with ["", "the status"], so we want pathcomponent[1] cause 0 is irrelevent
+        const pathComponents = requestUrl.pathname.split("/"); 
+        console.log(pathComponents);
+        console.log(req.method);
+
 
         //Here we handle the HTTP GET methods, so if the status from pathcomponents[1] is "test" it will maybe respond with something..
         if (req.method == "GET") { 
+            console.log("--------------- pathcomponents: " + pathComponents);
+            if(pathComponents.length > 2) {
             switch(pathComponents[1])
             {
                 case "planets":
                     
-                    console.log("Planets was started");
-                    if (pathComponents[2] == "Sun") {
+                    if (pathComponents[2] == "Sun") { //if pathcomponents[2] is "Sun"
+                        /*sendResponse skickar tillbaka en response till klienten.*/
                         sendResponse(res, 200, "text/plain", Jdata.star.description);
-                    } else {
+                    } else { //if pathcomponents[2] is not "Sun"
+                        //for loop that loops through all planets
                         for (pass = 0; pass < Jdata.planets.length; pass++) {
+                            //if pathcomponents[2] is equal to the name of the planet
                             if (pathComponents[2] == Jdata.planets[pass].name) {
-                                sendResponse(res, 200, "text/plain", Jdata.planets[pass].description);
+                                //send response with status code 200, content type text/plain and the description of the planet
+                                sendResponse(res, 200, "text/plain", JSON.stringify(Jdata.planets[pass].description));
                             }
                         }                       
                     }
+                    break;                    
+                case "image":                    
+                    console.log("Image switch");
+                    if (pathComponents[2] == "Sun") {
+                        sendResponse(res, 200, "application/json", JSON.stringify(Jdata.star.image_src));
+                    } else {
+                        console.log(pathComponents[2]);
+                        for (varv = 0; varv < Jdata.planets.length; pass++) {
+                            if(pathComponents[2] == (Jdata.planets[pass].name))
+                            sendResponse(res, 200, "application/json", JSON.stringify(Jdata.planets[pass].image_src));
+                        }
+                    }
+                    // var imageFilePath;
+                    // if (pathComponents[2] === "Sun") {
+                    //     imageFilePath = Jdata.star.image_src;
+                    // }
+                    // else {
+                    //     for (pass = 0; pass < Jdata.planets.length; ++pass) {
+                    //         if (Jdata.planets[pass].name == pathComponents[2]) {
+                    //             console.log("Found planet: " + pathComponents[2]);
+                    //             imageFilePath = Jdata.planets[pass].image_src;
+                    //             // imageFilePath = Jdata.planets.find(p => p.name === pathComponents[2]).image_src;
+                    //         }
+                    //     }                
+                        
+                    // }
+                    // console.log(imageFilePath);
+                    // //const imageFilePath = "./media/" + pathComponents[2] + ".png";
+                    // fs.readFile(imageFilePath, (err, data2) => {
+                    //     console.log("Reading image successfull!")
+                    //     if (err) {                              
+                    //         console.log("error in image")  
+                    //         sendResponse(res, 404, "text/plain", null);
+                    //     }
+                    //     else {                                
+                    //         console.log("image send success") 
+                    //         sendResponse(res, 200, "image/png", data2);
+                    //     }
+                    // });
                     break;
-                // case "image":
-                //     console.log("Image was started");
-                //     if (pathComponents[2] == "bla bla") {
-                //         console.log("Sun was started");
-                //         ft.readFile("./lab3/" + Jdata.star.image_src,(err, data) => {
-                //             console.log("Sun ft was started");
-                //             if (err) {
-                //                 console.error(err);
-                //                 res.statusCode = 500;
-                //                 res.end("Server error");
-                //                 console.log("Sun Error was started");
-                //             } else {
-                //                 sendResponse(res, 200, "application/octet-stream", data);
-                //                 // sendResponse(res, 200, "text/plain", Jdata.star.description);
-                //                 // console.log("Successfull IMAGE reading"); 
-                //                 console.log("Sun Successfull IMAGE reading");
-                //             }
-                //     });
-                // } else {
-                //     console
-                //     for (pass = 0; pass < Jdata.planets.length; pass++) {
-                //         if (pathComponents[2] == Jdata.planets[pass].name) {
-                //             fk.readFile("./lab3/" + Jdata.planets[pass].image_src, (err, data) => {
-                //                 if (err) {
-                //                     console.error(err);
-                //                     sendResponse(res, 500, null, null);
-                                    
-                //                 } else {
-                //                     sendResponse(res, 200, "application/octet-stream", data);
-                //                     sendResponse(res, 200, "text/plain", Jdata.star.description);
-                //                     console.log("Successfull IMAGE reading " + Jdata.planets[pass].name);  
-                //                 }
-                //             });
-                //         }
-                //     }                       
-                // }
-
-                    // break;  
+                
                 default:
-                    //do something
-                    console.log("Couldnt find any status with : " + pathComponents[1] + " " + requestUrl.pathname);
-                    sendResponse(res, 400, "text/plain", "No specific API Endpoint");
+                    // if no specific API Endpoint is found, send response with status code 400, content type text/plain and the message "No specific API Endpoint"
+                    console.log("Default switch");
+                    sendResponse(res, 204, "text/plain", "No specific API Endpoint");
                     break;
             }
         }
+        
+        }
+        if (req.method == "OPTIONS") {
+            sendResponse(res, 204, "text/plain", "this isn't supposed to be sent");
+            console.log("test");
+        }
+        
 
     });
+
 });
 
+
+/*
+-----------------Comment-----------------
+sendResponse skickar tillbaka en response till klienten.
+res, statusCode, contentType och data är parametrar som vi skickar med till funktionen.
+statusCode sätter statuskoden för response.
+*/
 function sendResponse(res, statusCode, contentType, data) {
     res.statusCode = statusCode;
-    if (contentType != null) {
-        res.setHeader("Content-Type", contentType);
+    if (contentType != null) { //if contenttype is not null
+        res.setHeader("Content-Type", contentType); //set the header to the contenttype
     }
-    res.setHeader("Access-Control-Allow-Origin", "*");
-    res.setHeader("Access-Control-Allow-Header", "*");
+    res.setHeader("Access-Control-Allow-Origin", "*"); //set the header to allow all origins
+    res.setHeader("Access-Control-Allow-Headers", "*"); //set the header to allow all headers
+    // res.setHeader("Access-Control-Allow-Method", "*");
     
-    if (data != null) {
-        res.end(data);
-    } else {
-        res.end();
+    if (data != null) { //if data is not null
+        res.end(data); //end the response with the data
+    } else { //if data is null
+        res.end(); //end the response
     }
 }
 
-    
+/*
+-----------------Comment-----------------
+server.listen(port, hostname, () => { ... }) gör så att servern lyssnar på port 3000.
+*/
 server.listen(port, hostname, () => {
     console.log("Server running at " + serverUrl);
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -17,8 +17,8 @@ const allPlanetsName =
         "Uranus",
         "Neptune",
         //Test error
-        "lucas",
-        "linus"
+        // "lucas",
+        // "linus"
         
     ]
 ;
@@ -28,35 +28,35 @@ const allPlanetsName =
 vi har en for loop som loopar igenom alla planeter i allPlanetsName och för varje
 planet så kallar vi på funktionen request_arg med planetens namn som argument.
 */
-for (var i = 0; i < allPlanetsName.length; i++) {
-    var searchReq = "/planets/";
-    var content = "text/plain";
-    var planetTempName = allPlanetsName[i];
-    request_arg(planetTempName, searchReq, content);
-    console.log(planetTempName);
+ function getInfo() {
+    for (var i = 0; i < allPlanetsName.length; i++) {
+        let searchReq = "/planets/";
+        let content = "text/plain";
+        let planetTempName = allPlanetsName[i];
+        request_arg(planetTempName, searchReq, content);
+        console.log(planetTempName);
+        
+    }
+    console.log("Done :) :" + allPlanetsName[1]);
+
+    
+    
+    
 }
-
-// for (var i = 0; i < allPlanetsName.length; i++) {
-//     var searchReq = "/image/";
-//     var content = "application/octet-stream";
-//     var planetTempName = allPlanetsName[i];
-//     request_arg(planetTempName, searchReq, content);
-//     console.log(planetTempName);
-
-// }
-
-
-
+function getIm() {
+    request_image(allPlanetsName[0], "/image/", "application/json");
+}
+getInfo();
+getIm();
 /*
 -----------------Comment-----------------
 asynchronus function, the function that request information to the server
 */
 async function request_arg(planetTempName, search, content) {
-    // console.log(planetTempName + " request_arg() " + content);
-    var response;
-    var consolesak = "yes";
-    console.log("consolesak first: " + consolesak);
+    let response;
+    console.log("Requesting: " + planetTempName + " " + search + " " + content);
 
+    
     response = await fetch(serverUrl + search + planetTempName, {
         method: "GET",        
         headers: {
@@ -65,17 +65,7 @@ async function request_arg(planetTempName, search, content) {
         body: null
     });
 
-    console.log("consolesak: " + consolesak);
-
-    // response2 = await fetch(serverUrl + "/image/"+ planetTempName, {
-    //     method: "GET",
-    //     headers: {
-    //         "Content-Type": "text/plain",            
-    //     },
-    //     body: null
-    // });
-    console.log(response + " " + search);
-    //Client receives the server message  
+ 
     
     /*
     -----------------Comment-----------------
@@ -83,14 +73,14 @@ async function request_arg(planetTempName, search, content) {
     Om båda är true så kallar vi på response.text() och skickar med textbody som argument.
     textbody innehåller informationen som vi får från servern.
     Vi skapar en div som vi lägger till i container och i denna div så skapar 
-    vi en h1 som innehåller planetens namn. Vi skapar även en h2 som innehåller textbody.
+    vi en h1 som innehåller planetens namn. Vi skapar även en h2 som isnnehåller textbody.
     */
-    if(response.ok && search == "/planets/") {
+    if (response.ok) {
         response.text().then((textbody) => {
-            console.log(textbody); 
-            var planetDiv = document.createElement("div");
-            var planetH1 = document.createElement("h1");
-            var planetH2 = document.createElement("h2");
+            // console.log(textbody); 
+            let planetDiv = document.createElement("div");
+            let planetH1 = document.createElement("h1");
+            let planetH2 = document.createElement("h2");
             planetH1.textContent = planetTempName;
             planetDiv.appendChild(planetH1);
             planetH2.innerText = textbody;
@@ -99,35 +89,55 @@ async function request_arg(planetTempName, search, content) {
             container.appendChild(planetDiv);
             
 
-        });
-
+        });        
     }
-
+    // } else if (response.ok && search === "/image/") {
+    //     response.blob().then((blobBody) => {
+    //       console.log(blobBody);
+    //       const imageTag = document.createElement("img");
+    //       const filepath = URL.createObjectURL(blobBody);
+    //       imageTag.src = filepath;
+    //       const planet = document.getElementById(planetTempName);
+    //       planet.appendChild(imageTag);
+    //     });
+    
     /*
     -----------------Comment-----------------
-    Denna else if satsen kollar om response.ok är true och om search är "/image/".
-    Om båda är true så kallar vi på response.blob() och skickar med blobBody som argument.
-    blobBody innehåller informationen som vi får från servern. Vi skapar en URL till blobBody.
-    Vi skapar en div som vi lägger till i container och i denna div så skapar vi en img som innehåller
-    filePath som src.
+    Om response.ok är false så kallar vi på response.text() och skickar med textbody som argument.
+    textbody innehåller informationen som vi får från servern.
     */
-    // else if(response.ok && search == "/image/") {
-    //     response.blob().then((blobBody) => {
-    //         console.log("Blobby: " + blobBody);
-    //         var filePath = URL.createObjectURL(blobBody);
-    //         var planetDiv = document.getElementById(planetTempName);
-    //         var planetImg = document.createElement("img");
-    //         planetImg.src = filePath;
-    //         planetDiv.appendChild(planetImg);
-    //     });
-    // }
-    else {
-        response.text().then((textbody) => {
-            console.log(textbody); // "idiot"
-        });
-    }
+  
+
 }
 
+async function request_image(planetTempN, se, con) {
+    let responseImage
+    console.log("Requesting: " + planetTempN + " " + se + " " + con);
+
+    responseImage = await fetch(serverUrl + se + planetTempN, {
+        method: "GET",        
+        headers: {
+            "Content-Type": con,            
+        },
+        body: null
+    });
+
+    if (responseImage.ok) {        
+        responseImage.json().then((jsonBody) => {
+            console.log(jsonBody);
+            let imageTag = document.createElement("img");
+            // let filepath = URL.createObjectURL(jsonBody);
+            // imageTag.src = filepath;
+            imageTag.src = jsonBody;
+            // let planet = document.getElementById(planetTempName);
+            // planet.appendChild(imageTag);
+            container.appendChild(imageTag);
+        });
+     } else {
+        console.log("Something wnt wrong");
+     }
+    
+}
 
 
 
