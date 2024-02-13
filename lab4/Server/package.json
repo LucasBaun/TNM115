@@ -1,0 +1,9 @@
+{
+  "name": "tnm115-sus",
+  "version": "1.0.0",
+  "description": "Towards a Web Interface of the System Usability Scale.",
+  "dependencies": {
+    "mongodb": "6.3.0"
+  },
+  "author": "Sven Gärd"
+}

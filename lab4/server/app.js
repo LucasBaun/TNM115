@@ -48,5 +48,5 @@ function sendResponse(res, statusCode, contentType, data) {
 }
 
 server.listen(port, hostname, () => {
-    console.log("Server is running against it's will at:\n" + serverUrl);
+    console.log("Server is about to explode!!\nPlease insert refreshment to cool down (FIKAPAUSE)\n" + serverUrl);
 });
