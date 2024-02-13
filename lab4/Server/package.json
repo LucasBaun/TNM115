@@ -5,5 +5,5 @@
   "dependencies": {
     "mongodb": "6.3.0"
   },
-  "author": "Sven Gärd"
+  "author": "Linus Henningsson"
 }
