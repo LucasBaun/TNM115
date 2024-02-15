@@ -1,5 +1,5 @@
 const serverUrl = "http://127.0.0.1:3000";
-const webPageURL = new URL(document.URL);
+// const webPageURL = new URL(document.URL);
 
 document.addEventListener("DOMContentLoaded", function(){
     console.log("HTML DOM tree loaded, and ready for manipulation.");
@@ -17,7 +17,7 @@ function getOneArtist(artist) {
 }
 
 getAllArtists();
-getOneArtist();
+
 
 
 async function req_arg(search, content) {
@@ -43,8 +43,7 @@ async function req_arg(search, content) {
                     });
                     console.log(artistList[tempName].name);
                     blockDiv.appendChild(artistNameH1);
-                    document.body.appendChild(blockDiv);
-                
+                    document.body.appendChild(blockDiv);                
             }
 
             });
@@ -57,8 +56,36 @@ async function req_arg(search, content) {
         }
     } else {
         if(respons.ok) {
-            // respons.json().
-            console.log("AYYEMEN");
+            respons.json().then((artistInfo) => {
+                // artistInfo = JSON.parse(artistInfo);  
+                console.log(artistInfo[0]);              
+                console.log(artistInfo[0].nameVariations);
+                const infoArg = [
+                    "_id",
+                    "discogsUrl",
+                    "name",
+                    "realname",
+                    "description",
+                    "nameVariations",
+                    "aliases",
+                    "memberInGroups",
+                    "referenceUrls"
+                ];
+
+                for (pass = 0; pass < infoArg.length; ++pass) {
+                    let temp = infoArg[pass];
+                    if (artistInfo[0].temp instanceof Array) {
+                        console.log(infoArg[pass]);
+                    }
+                }
+
+               
+            // const TextDiv = document.createElement("h2");
+            
+        
+            
+
+            });
         }
         else {
             console.log("DE FUNKAR INTE  2");

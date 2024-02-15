@@ -29,7 +29,6 @@ const server = http.createServer((req, res) => {
                     performDbOperation(res, "all_artists") //Request to database all artists
                     console.log("all_artists");
                 }
-
                 break;
         }
 
@@ -50,11 +49,31 @@ async function performDbOperation(res, search) {
         const findResult = await dbCollection.find(filterQuery).sort(sortQuery).project(projectionQuery).toArray(); ////find all artists and sort by name       
         sendResponse(res, 200, "application/json", JSON.stringify(findResult));
         
-    } else if (res != null && search != null) {   
-        console.log("search: " + search); 
+    } else if (res != null && search != null) {        
         let num = Number(search); //convert to number (id is number in database
-        const filterQuery = { _id: num }; //filter for artist name
-        const findResult = await dbCollection.find(filterQuery).toArray();//find artist        
+        // const filterQuery = { _id: num}; //filter for artist name
+        // const projectionQuery = {_id: 1, name: { $ne: null }, realname: { $ne: null }};
+        
+        // const findResult = await dbCollection.find(filterQuery).project(projectionQuery).toArray();//find artist   
+        const findResult = await dbCollection.aggregate([
+            { $match: { _id: num } },
+            {
+              $project: {
+                _id: 1,
+                name: { $cond: { if: { $ne: ["$name", null] }, then: "$name", else: "$$REMOVE" } },
+                realname: { $cond: { if: { $ne: ["$realname", null] }, then: "$realname", else: "$$REMOVE" } },
+                discogsUrl: { $cond: { if: { $ne: ["$discogsUrl", null] }, then: "$discogsUrl", else: "$$REMOVE" } },                
+                description: { $cond: { if: { $ne: ["$description", null] }, then: "$description", else: "$$REMOVE" } },
+                nameVariations: { $cond: { if: { $ne: ["$nameVariations", null] }, then: "$nameVariations", else: "$$REMOVE" } },
+                // memberInGroups: { $cond: { if: { $ne: [{ $size: "$memberInGroups"}, 0 ]}, then: "$memberInGroups", else: "$$REMOVE" } }
+                aliases: { $cond: { if: { $ne: ["$aliases", null] }, then: "$aliases", else: "$$REMOVE" } },
+                memberInGroups: { $cond: { if: { $ne: ["$memberInGroups", null] }, then: "$memberInGroups", else: "$$REMOVE" } },
+                referenceUrls: { $cond: { if: { $ne: ["$referenceUrls", null] }, then: "$referenceUrls", else: "$$REMOVE" } }
+              }
+            }
+          ]).toArray();
+          console.log(findResult[0].name);          
+        
         sendResponse(res, 200, "application/json", JSON.stringify(findResult));
     } else {
         console.log("No response object");

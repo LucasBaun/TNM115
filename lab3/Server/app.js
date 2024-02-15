@@ -43,9 +43,8 @@ const server = http.createServer((req, res) => {
         const requestUrl = new URL(serverUrl + req.url);
         const pathComponents = requestUrl.pathname.split("/"); 
         console.log(pathComponents);
-        console.log(req.method);
+        console.log(req.method);        
         
-
         //Here we handle the HTTP GET methods, so if the status from pathcomponents[1] is "test" it will maybe respond with something..
         if (req.method == "GET") { 
             console.log("--------------- pathcomponents: " + pathComponents);
