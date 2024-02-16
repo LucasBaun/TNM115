@@ -6,6 +6,12 @@ body{
     background-position: 10% 0;    
     transition: 0s linear;
     transition-property: background-position;
+    /* display: flex; */
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    margin: 0;
+    
 }
 
 h1:hover{
@@ -30,5 +36,29 @@ div{
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
+    /* max-width: 75dvw; */
     /* height: 100%; */
+}
+
+#infoDiv {
+    max-width: 75dvw;
+    color: white;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    border-radius: 12px;
+}
+
+span{
+    font-size: 150%;
+    font-family: "Protest Strike", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+a{
+    color: white;
+    /* text-decoration: none; */
+
 }
