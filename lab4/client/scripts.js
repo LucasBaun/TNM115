@@ -65,7 +65,9 @@ async function req_arg(search, content) {
                 document.infoDiv = document.createElement("div"); 
                 document.infoDiv.id = "infoDiv";
                 // for(tempName in artistInfo[0]) {};
-
+                const name = document.createElement("h2");
+                name.innerHTML = "<span>" + artistInfo[0].name + "</span>";
+                document.infoDiv.appendChild(name);
                 if (artistInfo[0].realname != null) {
                     const realName = document.createElement("h2");
                     realName.innerHTML = "<span>Real name: </span>" + "<br>" + artistInfo[0].realname;
@@ -101,6 +103,7 @@ async function req_arg(search, content) {
                     for (temp in artistInfo[0].referenceUrls) { 
                         const tempa = document.createElement("a"); //Skapar en a tagg
                         tempa.href = artistInfo[0].referenceUrls[temp]; //lägger till länk i den
+                        tempa.target = '_blank'; //öppnar länken i ny flik
                         tempa.innerText = artistInfo[0].referenceUrls[temp]; //lägger till text i den
                         referenceUrls.appendChild(document.createElement("br"));
                         referenceUrls.appendChild(tempa);
@@ -113,6 +116,7 @@ async function req_arg(search, content) {
                     const discogsUrl = document.createElement("p");
                     const temp = document.createElement("a");
                     temp.href = artistInfo[0].discogsUrl;
+                    temp.target = '_blank'; //öppnar länken i ny flik
                     temp.innerText = artistInfo[0].discogsUrl;
                     discogsUrl.innerHTML = "<span>Discogs url: </span>";
                     discogsUrl.appendChild(document.createElement("br"));
@@ -130,20 +134,7 @@ async function req_arg(search, content) {
                     "aliases",
                     "memberInGroups",
                     "referenceUrls"
-                ];
-
-                // for (pass = 0; pass < infoArg.length; ++pass) {
-                //     let temp = infoArg[pass];
-                //     if (artistInfo[0].temp instanceof Array) {
-                //         console.log(infoArg[pass]) + "hej";
-                //     }
-                // }
-
-               
-            // const TextDiv = document.createElement("h2");
-            
-        
-            
+                ];        
 
             });
         }
@@ -155,17 +146,12 @@ async function req_arg(search, content) {
 
 function clickedArtist(artistid) {
     console.log("clickedArtist: " + artistid);
-    var infoDiv = document.getElementById('infoDiv'); // assuming 'infoDiv' is the id of the element
+    var artistDiv = document.getElementById(artistid.toString()); // get the artist div
+    var infoDiv = artistDiv.querySelector('#infoDiv'); // find infoDiv inside artistDiv
     if(infoDiv) {
-        var idNumber = parseInt(infoDiv.id.replace('infoDiv', ''), 10);
-        console.log("Cliked also: " + infoDiv + " + " + idNumber);
-        // document.infoDiv.remove();
-        // document.artistDiv.appendChild();
-        document.artistDiv.removeChild(document.infoDiv);
-    } else{
-        console.log("Cliked2: " + artistid);
+        artistDiv.removeChild(infoDiv);
+    } else {
         getOneArtist(artistid);
-
     }
 }
 
