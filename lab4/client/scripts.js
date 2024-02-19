@@ -89,12 +89,15 @@ async function req_arg(search, content) {
                 }
                 if (artistInfo[0].aliases != null) {
                     const aliases = document.createElement("p");
-                    aliases.innerHTML = "<span>Aliases: </span>" + "<br>" + artistInfo[0].aliases;
+                    aliases.innerHTML = "<span>Aliases: </span>";
+                    for (temp in artistInfo[0].aliases) {
+                        aliases.innerHTML += "<br>" + JSON.stringify(artistInfo[0].aliases[temp]);
+                    }
                     document.infoDiv.appendChild(aliases);
                 }
                 if (artistInfo[0].memberInGroups != null) {
                     const memberInGroups = document.createElement("p");
-                    memberInGroups.innerHTML = "<span>Member in groups: </span>" + "<br>" + artistInfo[0].memberInGroups;
+                    memberInGroups.innerHTML = "<span>Member in groups: </span>" + "<br>" + JSON.stringify(artistInfo[0].memberInGroups);
                     document.infoDiv.appendChild(memberInGroups);
                 }
                 if (artistInfo[0].referenceUrls != null) {
@@ -123,18 +126,7 @@ async function req_arg(search, content) {
                     discogsUrl.appendChild(temp);
                     document.infoDiv.appendChild(discogsUrl);
                 }
-                document.artistDiv.appendChild(document.infoDiv);
-                const infoArg = [
-                    "_id",
-                    "discogsUrl",
-                    "name",
-                    "realname",
-                    "description",
-                    "nameVariations",
-                    "aliases",
-                    "memberInGroups",
-                    "referenceUrls"
-                ];        
+                document.artistDiv.appendChild(document.infoDiv);       
 
             });
         }
