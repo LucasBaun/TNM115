@@ -23,7 +23,6 @@ function getOneArtist(artist) {
 getAllArtists();
 
 
-
 async function req_arg(search, content) {
     const respons = await fetch(serverUrl + search, {
         method: "GET",        
@@ -149,6 +148,8 @@ async function req_arg(search, content) {
     }
 }
 
+
+
 function clickedArtist(artistid) {
     console.log("clickedArtist: " + artistid);
     var artistDiv = document.getElementById(artistid.toString()); // get the artist div
@@ -178,3 +179,5 @@ function searchInput() {
     });
 }
 }
+
+
