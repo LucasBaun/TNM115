@@ -1,0 +1,74 @@
+body{
+    background-color: black;
+    height: 100dvh;
+    background-image: url(bg.jpg);
+    background-repeat: no-repeat;
+    background-position: 10% 0;    
+    transition: 0s linear;
+    transition-property: background-position;
+    /* display: flex; */
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    margin: 0;
+    
+}
+
+h1:hover{
+    cursor: pointer;
+    color: rgb(185, 185, 185);
+    font-size: 300%;
+    transition: 0.3s;
+}
+
+h1{
+    color: white;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    font-family: "Protest Strike", sans-serif;
+    font-size: 250%;
+    transition: 0.3s;
+    font-weight: 400;
+    font-style: normal;
+    
+}
+
+div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    /* max-width: 75dvw; */
+    /* height: 100%; */
+}
+#search-field {
+    background-color: gray;
+    border-radius: 10px;
+    margin-top: 10px;
+    font-size: 20px;   
+}
+
+#search-field:hover{
+    background-color: white;
+}
+
+#infoDiv {
+    max-width: 75dvw;
+    color: white;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    border-radius: 12px;
+}
+
+span{
+    font-size: 150%;
+    font-family: "Protest Strike", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+a{
+    color: white;
+    /* text-decoration: none; */
+
+}
