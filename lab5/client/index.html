@@ -12,8 +12,40 @@
 </head>
 <body>
      <script src="scripts.js"></script>
+     <div id="addNewArtistDiv">
+      <h1>Add new artist</h1>
+      <form id="form" action="">
+        <input type="text" id="inpId" placeholder="_id &#42;" required>
+        <input type="text" id="inpDes" placeholder="description &#42;" required>
+        <input type="text" id="inpDis" placeholder="discogsUrl &#42;" required>
+        <input type="text" id="inpNam" placeholder="name &#42;" required>
+        <input type="text" id="inpRef" placeholder="reference Urls &#42;" required>
+        <input type="text" id="inpAli" placeholder="aliases">
+        <input type="text" id="inpMem" placeholder="members In Groups">
+        <input type="text" id="inpVar" placeholder="name Variations">
+        <input type="text" id="inpRea" placeholder="realname">
+        <button id="addNewArtistBtn" onclick="addNewArtistBtn()">Submit</button>
+      </form>
+
+    </div>
+
      <div>
         <input type ="text" id ="search-field" placeholder="Search...">
+        <button id="addNewArtistBtn" onclick="addNewArtistBtn()">Add new artist</button>
       </div>
+      
+
+      <script>
+        function addNewArtistBtn() {
+          var x = document.getElementById("addNewArtistDiv");
+          if (x.style.display === "none") {
+            x.style.display = "flex";
+          } else {
+            x.style.display = "none";
+          }
+
+        }
+
+      </script>
 </body>
 </html>
