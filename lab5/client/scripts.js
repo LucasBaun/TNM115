@@ -6,25 +6,63 @@ document.addEventListener("DOMContentLoaded", function(){
     
     action();
  });
+
  function action() {
+
+document.getElementById("addNewArtistBtn").addEventListener("click", function(event){
+    event.preventDefault();
+    postArtist();
+    fixInput();
+});
+
+function fixInput() {
+    document.getElementById("inpId").value = "";
+    document.getElementById("inpDes").value = "";
+    document.getElementById("inpDis").value = "";
+    document.getElementById("inpNam").value = "";
+    document.getElementById("inpRef").value = "";
+    document.getElementById("inpAli").value = "";
+    document.getElementById("inpMem").value = "";
+    document.getElementById("inpVar").value = "";
+    document.getElementById("inpRea").value = "";
+    
+}
 
 function getAllArtists() {
     req_arg("/artists", "application/json");
 
 }
 function getOneArtist(artist) {   
-    req_arg("/artists/" + artist, "application/json");
+    req_arg("/artists/" + artist, "application/json", "GET");
+    
 }
 function getSpecifikSearch(searchTemp) {
-    req_arg("/search/" + searchTemp, "application/json");
+    req_arg("/search/" + searchTemp, "application/json", "GET");
 }
+function getImage(artistId) {
+    req_arg("/image/" + artistId, "application/json", "GET");
+}
+function postArtist() {
+    var inputsArray = [];
+    inputsArray.push(document.getElementById("inpId").value || null); //0
+    inputsArray.push(document.getElementById("inpDes").value || null); //1
+    inputsArray.push(document.getElementById("inpDis").value || null); //2
+    inputsArray.push(document.getElementById("inpNam").value || null); //3
+    inputsArray.push(document.getElementById("inpRef").value || null); //4
+    inputsArray.push(document.getElementById("inpAli").value || null); //5
+    inputsArray.push(document.getElementById("inpMem").value || null); //6
+    inputsArray.push(document.getElementById("inpVar").value || null); //7
+    inputsArray.push(document.getElementById("inpRea").value || null); //8
+    console.log(inputsArray);  
+    req_arg("/insertartist/" + inputsArray, "application/json", "POST");
+}
+
 getAllArtists();
 
 
-
-async function req_arg(search, content) {
+async function req_arg(search, content, misc) {
     const respons = await fetch(serverUrl + search, {
-        method: "GET",        
+        method: misc,        
         headers: {
             "Content-Type": content,            
         },
@@ -70,7 +108,8 @@ async function req_arg(search, content) {
                     // for(tempName in artistInfo[0]) {};
                     const name = document.createElement("h2");
                     name.innerHTML = "<span>" + artistInfo[0].name + "</span>";
-                    document.infoDiv.appendChild(name);                
+                    document.infoDiv.appendChild(name);                                  
+                                      
                    
                     if (artistInfo[0].realname != null) {
                         const realName = document.createElement("h2");
@@ -118,6 +157,7 @@ async function req_arg(search, content) {
                             console.log(artistInfo[0].referenceUrls[temp]);
                         }
                         document.infoDiv.appendChild(referenceUrls);
+                        
                     }
                     if (artistInfo[0].discogsUrl != null) {
                         const discogsUrl = document.createElement("p");
@@ -131,9 +171,34 @@ async function req_arg(search, content) {
                         document.infoDiv.appendChild(discogsUrl);
                     }
                     document.artistDiv.appendChild(document.infoDiv);      
-
+                    getImage(artistInfo[0]._id);  
                 });
             }
+    } else if (component[1] == "image") {
+        if (respons.ok) {
+            respons.blob().then((imageFound) => {
+                document.artistImg = document.createElement("img");
+                var artistDiv = document.getElementById(component[2].toString()); // get the artist div
+                var infoDiv = artistDiv.querySelector('#infoDiv'); // find infoDiv inside artistDiv
+                document.artistImg.src = URL.createObjectURL(imageFound);
+                infoDiv.appendChild(document.artistImg);
+
+            });
+        }
+    } else if (component[1] == "insertartist") {
+        if (respons.ok) {
+            respons.json().then((artistsFound) => { 
+                
+                console.log(artistsFound);
+                location.reload();
+        });
+        }else {
+            if (respons.status == 409) {
+                alert("ID can only have numbers in, try again");
+            }else {
+                alert("ID already exists, try again");
+            }
+        }
     } else {
         if (respons.ok) {
             respons.json().then((artistsFound) => {                
@@ -156,10 +221,11 @@ function clickedArtist(artistid) {
     console.log("clickedArtist: " + artistid);
     var artistDiv = document.getElementById(artistid.toString()); // get the artist div
     var infoDiv = artistDiv.querySelector('#infoDiv'); // find infoDiv inside artistDiv
+    
     if(infoDiv) {
         artistDiv.removeChild(infoDiv);
     } else {
-        getOneArtist(artistid);
+        getOneArtist(artistid);        
     }
 }
 

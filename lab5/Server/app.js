@@ -3,6 +3,8 @@ const http = require("node:http");
 const hostname = "127.0.0.1";
 const port = 3000;
 const serverUrl = "http://" + hostname + ":" + port + "";
+const fs = require('node:fs');
+
 
 //MongoDb configuration
 const MongoClient = require("mongodb").MongoClient;
@@ -19,6 +21,8 @@ const server = http.createServer((req, res) => {
     const pathComponents = requestUrl.pathname.split("/");
 
     if (req.method == "GET") { //GET request
+        
+        
         switch (pathComponents[1]) { //If the first path component is "artists"
             case "artists":
                 if (pathComponents.length > 2) { //if there is more then 2 in path (artists/artistName)
@@ -32,10 +36,33 @@ const server = http.createServer((req, res) => {
             case "search":
                 performDbOperation(res, null, pathComponents[2]);
                 break;
+            case "image":
+                console.log("Gick igenom steg 0")
+                var imageFilePath = "./media/" + pathComponents[2] + ".png";
+                console.log("Gick igenom steg 1")
+                console.log(imageFilePath);
+                if (!fs.existsSync(imageFilePath)) {
+                    imageFilePath = "./media/PLACEHOLDER.png";
+                }
+                console.log("Gick igenom steg 2 " + imageFilePath)
+                    fs.readFile(imageFilePath, (err, imageData) => {
+                        if (err) {                                
+                            console.error("error in image " + err.message)  
+                            sendResponse(res, 404, "text/plain", null);
+                        }
+                        else {                               
+                            console.log("image send success") 
+                            sendResponse(res, 200, "image/png", imageData);
+                        }
+                    });
+                break;
         }
 
     } else if (req.method == "OPTIONS") {
         sendResponse(res, 204, null, null);
+    } else if (req.method == "POST") {        
+        performDbOperation(res, pathComponents[2], "postArtist");      
+
     }
 
 });
@@ -82,6 +109,41 @@ async function performDbOperation(res, search, text) {
         console.log("No response object");
     }
     
+    } else if (text == "postArtist"){ 
+        const regex = /^[0-9]+$/;
+        if(regex.test(search[0])) {
+        try {
+        search = search.split(",");
+        const artistCreate = {
+            "_id": Number(search[0]),
+            "discogsUrl": (search[2] || null),
+            "name": (search[3] || null),
+            "realname": (search[8] || null),
+            "description": (search[1] || null),
+            "nameVariations": ((search[7]).toArray || null),
+            "aliases": ((search[5]).toArray || null),
+            "memberInGroups": ((search[6]).toArray || null),
+            "referenceUrls": ((search[4]).toArray || null),
+        };      
+
+            dbCollection.insertOne(artistCreate)
+                .then(() => {
+            sendResponse(res, 200, "application/json", JSON.stringify(artistCreate));
+                })
+               .catch((error) => {
+                console.log("Error occurred: " + error);
+                sendResponse(res, 404, null, null);
+               }); 
+    } catch (error) {
+        console.log("Error occurred: " + error)
+        sendResponse(res, 404, null, null);
+    }
+} else {
+    //kollar nummer i id    
+    console.log("Error occurred");
+    sendResponse(res, 409, null, null);
+}
+        
     } else {
         const indexResult = await dbCollection.createIndex({name: "text", description: "text", realname: "text"});        
         filterQuery = {$text: {$search: text}};

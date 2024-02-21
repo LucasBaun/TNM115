@@ -133,3 +133,8 @@ a{
     cursor: pointer;
     background-color: white;
 }
+
+img{
+    max-width: 35dvw;
+    border-radius: 13px;
+}
